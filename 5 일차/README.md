@@ -6,7 +6,7 @@
    - 소스코드를 기계어로 변환하는 컴파일 없이 실행 가능
    - 코드를 대화 하듯이 한 줄 입력하고 실행 후 확인 가능
 
-   ![python](images/python.png)
+   ![python](images/python.PNG)
 
  - 객체 지향 프로그래밍 언어 > 객체 : 숫자, 문자, 클래스 등 모든 값
  - 파이썬에서 제안하는 가이드 [PEP8](https://www.python.org/dev/peps/pep-0008/)
@@ -28,7 +28,7 @@
 
  1. 변수 => 객체를 참조하기 위해 사용되는 이름 으로 연산자(=) 을 통해 값을 할당.
 
-  ![var](images/var.png)
+  ![var](images/var.PNG)
 
   ![var2](images/var2.PNG)
 
