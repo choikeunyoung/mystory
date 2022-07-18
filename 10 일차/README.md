@@ -55,13 +55,13 @@
 
    ![divmod](images/divmod.PNG)
 
-   ![random](images/random.png)
+   ![random](images/random.PNG)
 
    argument의 갯수에 문제가 있는경우 위와 같은 오류들이 발생한다.
 
    - ValueError - 값이 바르지않거나 적절하지 않은 경우
 
-   ![value](images/value.png)
+   ![val](images/value.PNG)
 
    - IndexError - 인덱스 범위가 올바르지 않을때
 
@@ -81,7 +81,7 @@
 
    - IndentationError - Indentation이 적절하지 않는 경우 (스페이스나 띄어쓰기등이 적절하지 않은경우)
 
-   ![Indentation](images/indent.png)
+   ![Indent](images/indent.PNG)
 
    - KeyboardInterrupt - 임의로 프로그램을 조작하여 종료하였을 때
 
