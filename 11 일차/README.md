@@ -125,7 +125,7 @@
     # ['hi',2,3]
 ```
 
-   ![l_copy](images/l_copy.png)
+   ![l_copy](images/l_copy.PNG)
 
    - 값이 같이 변하는 이유는 주소값을 복사해 주기 때문이다.
    - 같은 주소값이 아닌 다른 주소값을 가진 값들로 저장하게 바꿔준다.
@@ -141,7 +141,7 @@
     # ['hi',2,3]
 ```
 
-   ![l_copy_s](images/l_copy_s.png)
+   ![l_copy_s](images/l_copy_s.PNG)
 
    - 값은 같지만 다른 주소값이 할당된 것을 볼 수 있다.
 
