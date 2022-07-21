@@ -1,8 +1,10 @@
 # 파이썬 응용/심화
   - List Comprehension
     - 표현식과 제어문을 통해 특정한 값을 가진 리스트를 간결하게 생성
-      `[<expression> for <변수> in <iterable>]`
-      `[<expresssion> for <변수> in <iterable> if <조건식>]`
+```
+      [<expression> for <변수> in <iterable>]
+      [<expresssion> for <변수> in <iterable> if <조건식>]
+```
 
 ```python
   cubic_list = []
@@ -15,8 +17,10 @@
 
   - Dictionary Comprehension
     - 표현식과 제어문을 통해 특정한 값을 가진 리스트를 간결하게 생성
-      `{key: value for <변수> in <iterable>}`
-      `{key: value for <변수> in <iterable> if <조건식>}`
+```
+      {key: value for <변수> in <iterable>}
+      {key: value for <변수> in <iterable> if <조건식>}
+```
 
 ```python
   cubic_list = []
