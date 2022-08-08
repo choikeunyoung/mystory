@@ -74,3 +74,37 @@
 
   3. 회전
     - 이차원 리스트를 왼쪽, 오른쪽으로 90도 회전하는 경우가 존재
+
+   1. 왼쪽으로 90도 회전하기
+```python
+    matrix = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+    ]
+
+    n = 3 
+    rotated_matrix = [[0] * n for _ in range(n)]
+
+    for i in range(n):
+        for j in range(n):
+            rotated_matrix[i][j] = matrix[j][n-i-1]
+    
+```
+
+   2. 오른쪽으로 90도 회전하기
+```python
+    matrix = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+    ]
+
+    n = 3 
+    rotated_matrix = [[0] * n for _ in range(n)]
+
+    for i in range(n):
+        for j in range(n):
+            rotated_matrix[i][j] = matrix[n-j-1][i]
+    
+```
