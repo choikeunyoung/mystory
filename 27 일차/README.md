@@ -3,7 +3,7 @@
   - 체계화 된 데이터의 모임
   - 여러 사람들이 공유하고 사용할 목적으로 통합 관리되는 정보의 집합
   - 논리적 연관된 자료의 모음, 고도로 내용을 구조화 함으로써 검색과 갱신의 효율화 한 것
-  - 몇 개의 자료 파일을 조직적으로 통합
+  - 몇 개의 자료 파일을 조직적으로 통합하여 중복 자료항목을 제거하고 자료를 구조화 하여 기억시켜 놓은 자료의 집합체
   - 데이터베이스로 얻는 장점들
     - 데이터 중복 최소화
     - 데이터 무결성 ( 정확한 정보를 보장 )
@@ -16,6 +16,8 @@
   - 관계형 데이터베이스
   - 서로 관련된 데이터를 저장하고 접근할 수 있는 데이터베이스 유형
   - 키(key)와 값(value)들의 간단한 관계(relation)를 표(talbe) 형태로 정리한 데이터베이스
+   
+   ![0](images/0.PNG)
 
   - 스키마(schema)
    - 데이터베이스에서 자료의 구조, 표현방법, 관계등 전반적인 명세를 기술한 것
@@ -30,6 +32,8 @@
   - 열(column)
    - 각 열에 고유한 데이터 형식 지정
 
+   ![3](images/3.PNG)
+  
   - 행(row)
    - 실제 데이터가 저장되는 형태
 
@@ -52,6 +56,13 @@
    - 로컬에서 간단한 DB 구성을 할 수 있으며, 오픈소르 프로젝트이기 때문에 자유롭게 사용가능
    - 학습을 하는데 있어서 사용이 편하다.
 
+  - SQLite Data Type
+   1. NULL
+   2. INTEGER : 크기에 따라 0, 1, 2, 3, 4, 6 또는 8바이트 저장된 부호 있는 정수
+   3. REAL : 8바이트 부동 소수점 숫자로 저장된 부동 소수점 값
+   4. TEXT
+   5. BLOB : 입력된 그대로 정확히 저장된 데이터
+
 # SQL (Structured Query Language)
   - 관계형 데이터베이스 관리시스템의 데이터 관리를 위해 설계된 특수 목적의 프로그래밍 언어
   - 데이터베이스 스키마 생성 및 수정
@@ -60,6 +71,12 @@
 
   ![7](images/7.PNG)
 
+  - SQL Keywords
+    1. INSERT : 새로운 데이터 삽입(추가)
+    2. SELECT : 저장된 데이터 조회
+    3. UPDATE : 저장된 데이터 갱신
+    4. DELETE : 저장된 데이터 삭제
+
 ```SQL
   CREATE TABLE students (
     id INTEGER PRIMARY KEY, -- id 는 정수로 기본 값
@@ -67,17 +84,27 @@
     age INTEGER DEFAULT 1 CHECK ( 0 < age ) -- age는 기본 1로 하되 0보다 age가 큰것을 확인해라
 );
 ```
+  - 필드 제약 조건
+    - NOT NULL : NULL 값 입력 금지
+    - UNIQUE : 중복 값 입력 금지 (NULL 값은 중복 입력 가능)
+    - PRIMARY KEY : 테이블에서 반드시 하나. NOT NULL + UNIQUE
+    - FOREIGN KEY : 외래키, 다른 테이블의 KEY
+    - CHECK : 조건으로 설정된 값만 입력 허용
+    - DEFAULT : 기본 설정 값
 
+# CRUD ( Create, REead, Update, Delete)
   - Create
+   - CREATE TABLE : 데이터베이스에서 테이블 생성
+   - DROP TABLE : 데이터베이스에서 테이블 제거
    - INSERT
     - insert a single row into a table
     - 테이블에 단일 행 삽입
     > INSERT INTO 테이블_이름 (컬럼1, 컬럼2) VALUES (값1, 값2);
-    - 테이블에 정의된 모든
-    >
+    - 테이블에 정의된 모든 컬럼에 맞춰 순서대로 입력
+    > INSERT INTO 테이블_이름 VALUES (값1, 값2, 값3);
 
   **실습**
-  - classmate 에 이름 홍길동 나이 23을 넣어보자
+  - classmate 에 이름 홍길동 나이 23인 데이터를 넣어보자
 
 ```SQL
     CREATE TABLE classmates (
@@ -101,15 +128,29 @@ INSERT INTO classmates VALUES
 ('박민희', 29, '대구')
 ('최혜영', 28, '전주')
 ```
+  - rowid : SQLite에서 PRIMARY KEY가 없는 경우 자동으로 증가하는 PK 컬럼
+
+   ![8](images/8.PNG)
+
   - READ
+   - SELECT
+    - 테이블에서 데이터 조회
+    - 가장 기본이 되는 문이며 다양한 절들과 함께 사용
+    > (ex ORDER BY, DISTINCT, WHERE, LIMIT, GROUP BY ...)
+   
    - LIMIT
+    - 쿼리에서 반환되는 행 수를 제한
+    - 특정 행부터 시작해서 조회하기 위해 OFFSET 키워드를 함께 사용하기도 함
+
+   - WHERE
+    - 쿼리에서 반환되는 행에 대한 특정 검색 조건을 지정
 
    - SELECT DISTINCT
     - 조회 결과에서 중복 행을 제거
     - DISTINCT 절은 SELECT 키워드 바로 뒤에 적어야함
     
    - OFFSET : 처음부터 주어진 요소나 지점까지의 차이를 나타내는 정수형
-    - 
+    - OFFSET 5를 지정할 경우 6번째 행부터 탐색
    
    - DELETE : 테이블 이름에서 지우고 싶은 값을 지운다
 
@@ -118,6 +159,8 @@ INSERT INTO classmates VALUES
    > UPDATE [테이블] SET [열] = '변경할값' WHERE [조건]
 
    > SELECT COUNT(*) FROM classmates; > 데이터 갯수 세는 코드
+  
+  
    - **예시**
     - classmates 테이블에서 id, name 만을 조회해서 출력
     >SELECT id, name FROM classmates;
