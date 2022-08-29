@@ -15,9 +15,7 @@
   - 브라우저 별 호환성 사이트
     - [caniuse?](https://caniuse.com/)
 
-```html
-    <H1>HTML (Hyper Text Markup Language</H1>
-```
+## <span style='color: blue'>HTML (Hyper Text Markup Language)</span>
 
   - 참조를 통해 사용자가 한 문서에서 다른 문서로 즉시 접근할 수 있는 텍스트
   - HTML 기본 구조
