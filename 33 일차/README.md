@@ -79,12 +79,14 @@ COMMIT;
     # '인디밴드'
 ```
   - READ
+
 ```python
     Genre.objects.get(id=1)
     # PK 를 받아올 때 사용
     # 반드시 하나만을 리턴함 값이 없으면 오류
     # Genre: Genre object (1)
     Genre.objects.filter(id=1)
+    # 값을 여러개 리턴할때 사용
     # QuerySet [Genre: Genre object (1)]
 ```
 
