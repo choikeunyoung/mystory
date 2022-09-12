@@ -62,4 +62,49 @@
     print(word.find("k"))
     # ValueError : substring not found
 ```
+   - .count(개수를 셀 문자)
+     - 문자열에서 특정 문자가 몇 개인지 반환
+     - 문자 뿐만 아니라, 문자열의 개수도 확인 가능
+```python
+  word = 'banana'
+  print(word.count("a"))
+  # 3
+  print(word.count('na'))
+  # 2
+```
+   - .replace(기존 문자, 새로운 문자)
+     - 문자열에서 기존 문자를 새로운 문자로 수정한 새로운 문자열 반환
+     - 특정 문자를 빈 문자열("")로 수정하여 마치 해당 문자를 삭제한 것 같은 효과 가능
+```python
+  word = "happyhacking"
+  print(word.replace("happy","angry"))
+  # angryhacking
+```
+   - 삽입할 문자.join(iterable)
+     - iterable의 각 원소 사이에 특정 문자를 삽입한 새로운 문자열 반환
+     - 공백 출력, 콤마 출력 등 원하는 출력 형태를 위해 사용
+```python
+  word = "happyhacking"
+  print(" ".join(word))
+  # h a p p y h a c k i n g
+```
+
   3. 아스키(ASCII) 코드
+    - 컴퓨터는 숫자만 이해가 가능(0 과 1)
+
+   1. ord(문자)
+     - 문자 아스키코드로 변환하는 내장함수
+```python
+  print(ord("A"))
+  # 65
+  print(ord("a"))
+  # 97
+```
+   2. chr(아스키코드)
+    - 아스키코드 문자로 변환하는 내장함수
+```python
+  print(chr(65))
+  # A
+  print(chr(97))
+  # a
+```

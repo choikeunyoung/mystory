@@ -172,3 +172,16 @@
 ```
 
   - 다중컬럼 서브쿼리
+    - 특정 성씨에서 가장 어린 사람들의 이름과 나이
+```SQL
+    SELECT
+        last_name,
+        first_name,
+        age
+    FROM users
+    WHERE (last_name, age) IN (
+        SELECT last_name, MIN(age)
+        FROM users
+        GROUP BY last_name)
+    ORDER BY last_name;
+```
