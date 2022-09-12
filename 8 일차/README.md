@@ -244,3 +244,9 @@
     # {'apple': '사과', 'banana' : '바나나'}
 ```
    - dict['문자열'] = <넣고싶은 값> 으로 값을 추가함
+```python
+    my_dict = {'apple':'사', 'banana':'바나나'}
+    my_dict['apple'] = '토마토'
+    print(my_dict)
+    # {'apple': '토마토', 'banana' : '바나나'}
+```
