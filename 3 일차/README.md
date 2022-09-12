@@ -12,9 +12,8 @@
 >
 > 위 그림이 어려울 경우 아래 그림 참조
 >
-> ![structure](images/handmade.PNG)
+> ![structure](images/structure_2.png)
 >
-> **추후에 추가할 예정 (이번 주 주말)**
 
 
 # Git Branch
@@ -34,7 +33,7 @@
 > 
 > git add. or git add <파일이름> => 가상환경에 파일 추가
 >
-> ![add](images/command/add.png)
+> ![add](images/add.PNG)
 >
 > git commit -m <메세지> => commit을 할때 추가할 메세지를 넣는다
 >
