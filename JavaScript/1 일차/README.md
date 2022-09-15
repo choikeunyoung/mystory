@@ -87,9 +87,22 @@
   > a의 href 속성 가져오기
   - classlist
   > class 리스트형태로 반환해줌
+
+
 ## Vanilla JavaScript
   - 크로스 브라우징, 간편한 활용 등을 위해 많은 라이브러리 등장(jQuery 등)
   - ES6 이후, 다양한 도구의 등장으로 순수 자바스크립트 활용의 증대
 
+```javascript
+    $('li').css('color','red')
+    간단하게 나타낼 수 있는 식을
+    document.querySelectorAll('li').forEach(item => item.style.color='red')
+    복잡하게 나타낸다.
+```
+
 ## node.js
-  - JavaScript에 Runtime 환경 제공 => 실행시킬 수 있는 환경
+  - JavaScript에 Runtime 환경 제공 => 프로그램을 실행시킬 수 있는 환경
+  - JavaScript를 사용하기 위해 만들어진 것
+  - C/C++ , Java와 같은 프로그래밍 언어
+  - Node.js 를 설치하면 터미널프로그램에서 브라우저 없이 JavaScript를 사용할 수 있다.
+  - 이를 이용하여 서버를 만들 수 있음
