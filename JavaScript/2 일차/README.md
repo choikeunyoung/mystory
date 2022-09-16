@@ -1,27 +1,56 @@
 # 변수와 식별자
+  - 식별자는 변수를 구분할 수 있는 변수명을 말함
+  - 식별자는 문자, 달러($) 또는 밑줄(_)로 시작
+  - 대소문자를 구분하며, 클래스명 외에는 모두 소문자로 시작
+  - 선언, 할당, 초기화
+   - 선언 (Declaration)
+     - 변수를 생성하는 행위 또는 시점
 
-선언, 할당, 초기화
-  - 선언 (Declaration)
-    - 변수를 생성하는 행위 또는 시점
 ```JavaScript
     let foo
     console.log(foo)
 ```
-  - 할당 (Assignment)
-    - 선언된 변수에 값을 저장하는 행위 또는 시점
+
+   - 할당 (Assignment)
+     - 선언된 변수에 값을 저장하는 행위 또는 시점
+
 ```JavaScript
     foo = 11
     console.log(foo)
 ```
-  - 초기화 (Initialization)
-    - 선언된 변수에 처음으로 값을 저장하는 행위 또는 시점
+
+   - 초기화 (Initialization)
+     - 선언된 변수에 처음으로 값을 저장하는 행위 또는 시점
+
 ```JavaScript
     let bar = 0
     console.log(bar)
 ```
 
   - let, const : let은 값의 재할당이 가능하지만 const는 불가능함 둘다 재선언은 불가능함
-  - 블록 스코프*
+
+```JavaScript
+    let number = 10 // 1. 선언 및 초기값 할당
+    number = 10 // 2. 재할당
+    console.log(number) // 10
+
+    const number_1 = 10 // 1. 선언 및 초기값 할당
+    number_1 = 10 // 2. 재할당 불가능
+```
+
+  - 블록 스코프* (block scope)
+    - if, for, 함수 등의 중괄호 내부를 가리킴
+    - 블록 스코프를 가지는 변수는 블록 바깥에서 접근 불가능
+
+```JavaScript
+    let x = 1
+    if (x === 1) {
+        let x = 2
+        console.log(x) // 2
+    }
+    console.log(x) // 1
+```
+
   - var
     - var로 선언한 변수는 재선언 및 재할당 모두 가능
     - ES6 이전에 변수를 선언할 때 사용되는 키워드
@@ -29,6 +58,34 @@
     - 함수 스코프*
       - 함수의 중괄호 내부를 가리킴
       - 함수 스코프를 가지는 변수는 함수 바깥에서 접근 불가능
+
+```JavaScript
+    function foo() {
+        var x = 2
+        console.log(x) // 2
+    }
+
+    // ReferenceError: x is not defined
+    console.log(x) 
+```
+
+  - 호이스팅
+    - 변수를 선언 이전에 참조할 수 있는 현상
+    - 변수 선언 이전의 위치에서 접근 시 undefined를 반환
+  - 자바스크립트는 모든 선언을 호이스팅한다.
+
+```JavaScript
+    console.log(unsername) // undefined
+    var username = '홍길동'
+    console.log(email) // Uncaught ReferenceError
+    let email = 'gildong@gmail.com'
+    console.log(age) // Uncaught ReferenceError
+    const age = 50
+```
+
+  - let, const, var 비교
+
+  ![2](images/2.jpg)
 
 ## 데이터 타입
   - 자바스크립트의 모든 값은 특정한 데이터 타입을 가짐
@@ -38,12 +95,31 @@
 
   - 원시 타입
     - 객체가 아닌 기본 타입
-    - 변수에 해당 데이터
+    - 변수에 해당 타입의 값이 담김
+    - 다른 변수에 복사할 때 실제 값이 복사됨
+
+```JavaScript
+    let message = '안녕하세요!' // 1. message 선언 및 할당
+    let greeting = message  // 2. greeting에 message 복사
+    console.log(greeting)   // 3. '안녕하세요!' 출력
+
+    message = 'Hello, world!'   // 4. message 재할당
+    console.log(greeting)   // 5. 안녕하세요! 출력
+```
 
   - 참조 타입
     - 객체 타입의 자료형
     - 변수에 해당 객체의 참조값이 담김
     - 다른 변수에 복사할 때 참조 값이 복사됨
+
+```JavaScript
+    let message = ['안녕하세요!'] // 1. message 선언 및 할당
+    let greeting = message  // 2. greeting에 message 복사
+    console.log(greeting)   // 3. ['안녕하세요!'] 출력
+
+    message[0] = 'Hello, world!'   // 4. message 재할당
+    console.log(greeting)   // 5. ['Hello, world!'] 출력
+```
 
   - 숫자 타입
     - 정수,실수 구분 없는 하나의 숫자 타입
@@ -57,14 +133,33 @@
     - 16비트 유니코드 문자의 집합
     - 작은따옴표 또는 큰따옴표 모두 가능
     - 템플릿 리터럴
+      - ES6부터 지원
+      - 따옴표 대신 backtick(` `)으로 표현
+      - ${ expression } 형태로 표현식 삽입 가능
 
   - undefined
-    - 변수의 값이 없음을 나타내는 타입
+    - 변수의 값이 없음을 나타내는 데이터 타입
+    - 변수 선언 이후 직접 값을 할당하지 않으면, 자동으로 undefined가 할당됨
 
   - null
     - 변수의 값이 없음을 의도적으로 표현할 때 사용하는 데이터 타입
     - null 타입과 typeof 연산자
       - typeof 연산자 : 자료형 평가를 위한 연산자
+      - null 타입은 ECMA 명세의 원시 타입의 정의에 따라 원시 타입에 속하지만, typeof 연산자의 결과는 객체로 표현됨
+
+```JavaScript
+    let firstName = null
+    console.log(firstName) // null
+    typeof null // object
+```
+
+  - Boolean 타입
+    - 논리적 참 또는 거짓을 나타내는 타입
+    - true or false 표현
+    - 조건문 또는 반복문에서 유용하게 사용
+      - 조건문 or 반복문에서 boolean이 아닌 데이터 타입은 자동 형변환 규칙에 따라 true or false로 변환됨
+
+  ![3](images/3.png)
 
 ## 연산자
   - 오른쪽에 있는 피연산자의 평가 결과를 왼쪽 피연산자에 할당하는 연산자
