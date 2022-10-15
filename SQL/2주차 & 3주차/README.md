@@ -80,3 +80,67 @@
   > SELECT \* FROM nasdaq_company ORDER BY symbol OFFSET 1000 ROWS => 1001번째 행부터 검색, ORDER BY 구문이랑 같이 사용해 줘야함
 - FETCH NEXT : 몇개를 출력한지 지정해 주는 명령어 OFFSET과 같이사용해야 한다.
   > SELECT \* FROM nasdaq_company ORDER BY symbol OFFSET 1000 ROWS FETCH NEXT 10 ROWS ONLY
+
+## 와일드카드로 문자열 검색하기
+
+- 쿼리는 정확하게 조건을 입력하여 사용 한다.
+- 조건을 몰라 일부만을 검색하기도 해야하기 때문에 LIKE를 이용하여 와일드카드로 지정된 패턴과 일치하는 문자열, 날짜, 시간 등으로 검색한다.
+
+> SELECT [열] FROM [테이블] WHERE [열] LIKE [조건값]
+
+- %로 특정 문자열을 포함하는 문자열 검색하기
+
+  - 특정한 문자를 포함하는지 여부는 %로 검색한다.
+  - 0개 이상의 문자열과 대치하고 %의 위치에 따라서 특정 문자열이 포함된 문자열 검색이 가능
+
+  - A% : A로 시작하는 모든 문자열
+
+    > SELECT \* FROM nasdaq_company WHERE symbol LIKE 'A%'
+
+  - %A : A로 끝나는 모든 문자열
+
+    > SELECT \* FROM nasdaq_company WHERE symbol LIKE '%A'
+
+  - %A% : A를 포함하는 모든 문자열
+
+    > SELECT \* FROM nasdaq_company WHERE symbol LIKE '%A%'
+
+  - 특정 문자열을 제외하고 데이터를 검색하려면 NOT LIKE 사용
+
+    > SELECT \* FROM nasdaq_company WHERE symbol NOT LIKE '%A%'
+
+  - % 가 들어있는 문장을 검색하고 싶을 경우
+
+    > SELECT \* FROM 테이블 WHERE col LIKE '%%%' (X)
+
+  - % 는 0개 이상의 문자를 의미하는 예약어기 때문에 불가능하다.
+  - ESCAPE라는 방법을 사용한다.
+
+    > SELECT \* FROM 테이블 WHERE col LIKE '%#%%' ESCAPE '#'
+    > 위 방법을 사용할 경우 #이 빠지게 되며 '#%' > '%' 를 검색할 수 있게된다
+
+  - ESCAPE 는 #,&,!,/ 다양한 문자를 사용할 수 있지만 실제검색하는 데이터에 있는 문자가 들어있으면 검색이 제대로 안된다.
+
+- \_로 특정 문자열을 포함하는 특정 길이 문자열 검색하기
+
+  - 해당 문자열을 포함하는 특정 길이문자열을 검색하는데 사용
+
+  - A\_ : A로 시작하면서 뒤의 글자가 무엇이든 상관없으며 전체 글자 수는 2개인 문자열
+
+    > SELECT \* FROM nasdaq_company WHERE symbol LIKE 'A\_'
+
+  - \_A : A로 끝나면서 앞의 문자는 무엇이든 상관없으며 전체 글자수는 2개인 문자열
+
+    > SELECT \* FROM nasdaq_company WHERE symbol LIKE '\_A'
+
+  - \_A\_ : 세 글자 중 가운데 글자만 A이며 앞뒤로는 무엇이든 상관없는 문자열
+    > SELECT \* FROM nasdaq_company WHERE symbol LIKE '\_A\_'
+
+- \_와 %를 조합하여 사용자가 원하는 데이터의 문자열을 가져올 수 있다.
+
+  - A_C로 시작하는 symbol 검색 : 이후 문자열은 무엇이든 가능
+    > SELECT \* FROM nasdaq\*company WHERE symobol LIKE 'A_C%'
+  - \_\_F로 시작하는 symbol 검색 : 이후 문자열 무엇이든 가능
+    > SELECT \* FROM nasdaq_company WHERE symobol LIKE '\_\_F%'
+  - A로 시작하는 symbol 검색 : 마지막 문자열만 L\_이면 무엇이든 가능
+    > SELECT \* FROM nasdaq_company WHERE symobol LIKE 'A%L\_'
