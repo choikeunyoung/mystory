@@ -144,3 +144,50 @@
     > SELECT \* FROM nasdaq_company WHERE symobol LIKE '\_\_F%'
   - A로 시작하는 symbol 검색 : 마지막 문자열만 L\_이면 무엇이든 가능
     > SELECT \* FROM nasdaq_company WHERE symobol LIKE 'A%L\_'
+
+- []로 문자나 문자 범위를 지정해 문자열 검색
+
+  - 문자나 문자 범위를 지정해 문자열을 검색하는 [] 를 사용한다
+
+  - 1번 문자가 A, 2번 문자가 A or B or C 인 symbol 검색
+
+    > SELECT _ FROM nasdaq_company WHERE symbol LIKE 'A[A, B, C]'
+    > 또는
+    > SELECT _ FROM nasdaq_company WHERE symbol LIKE 'A[A-C]'
+
+  - A로 시작하며 2번째 문자가 A-C or G or M-R 인 symbol 검색
+
+    > SELECT \* FROM nasdaq_company WHERE symbol LIKE 'A[A-C, G, M-R]'
+
+  - 문자나 범위 제외한 문자열 검색하기 => []은 NOT이 아닌 ^을 사용
+  - [^a]%는 첫 글짜가 A가 아닌 모든 문자열 검색한다.
+
+  - A로 시작하며 2번째 문자가 A,B,C가 아닌 문자열을 검색
+    > SELECT _ FROM nasdaq_company WHERE symbol LIKE 'A[^A, ^B, ^C]'
+    > 또는
+    > SELECT _ FROM nasdaq_company WHERE symbol LIKE 'A[^a-c]'
+
+- 다양한 방법으로 와일드카드 사용
+
+  - A로 시작하면서 2번째 문자는 C, P를 포함하고 3번째 문자는 T를 포함하지 않으며 마지막 문자는 W로 끝나는 문자열 검색
+
+    > SELECT \* FROM nasdaq_company WHERE symbol LIKE 'A[C, P][^t]%W'
+
+  - 1번째 문자는 A, 2번쨰 문자는 A-C, 3번쨰 문자는 아무거나, 4번째 문자는 0인 문자열
+
+    > SELECT \* FROM nasdaq_company WHERE symbol LIKE 'A[A-C]\_0%'
+
+## 데이터 그룹화 다루기
+
+- 데이터를 검색할 때 공통 그룹의 정보를 확인해야 하는데 데이터를 그룹화 하는 방법이 GROUP BY 문이다.
+- GROUP BY 문과 HAVING 문을 사용해서 그룹화 한다.
+
+  > SELECT [열] FROM [테이블] WHERE [열] = [조건값] GROUP BY [열] HAVING [열] = [조건값]
+  >
+  > GROUPY BY : 데이터를 그룹화하는 구문
+  >
+  > [열] 그룹화 기준의 열 이름을 지정한다. 1개 이상 그룹화할 수 있다.
+  >
+  > [HAVING] : WHERE 와 비슷한 기능을 하며 그룹화된 결과의 필터링 기능을 한다.
+  >
+  > [조건값] : HAVING 필터에 적용할 조건값을 입력한다.

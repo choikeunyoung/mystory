@@ -205,3 +205,17 @@ positions.forEach(function (pos) {
 
 
 ![3](images/3.PNG)
+
+
+  - 추가로 아래 코드에서 map에 값을 넣어줄 경우 자동으로 맵에 마커가 표시가 됨 => 자기가 오버레이를 띄우고싶다 하면 map에 값넣고 아니면 map을 없애면됨!!
+
+```javascript
+    var overlay = new kakao.maps.CustomOverlay({
+        map: map,
+        clickable: true,
+        content: content,
+        position: positions[i].latlng,
+        xAnchor: 0.5,
+        yAnchor: 2,
+    });
+```
