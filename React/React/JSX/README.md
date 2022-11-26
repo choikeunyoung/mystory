@@ -104,5 +104,19 @@ ReactDOM.render(
 // 큰따옴표 사이 문자열을 넣거나
     const element = <div tabIndex="0"></div>;
 // 중괄호 사이에 자바스크립트 코드를 넣으면 됨!
-    const element = <img src={user.avatarUrl}></img>;
+    const element = <img src={user.avatarUrl}></img>
 ```
+
+   - 자식(Children)을 정의하는 방법
+
+```JSX
+const element = (
+    <div>
+        <h1>안녕하세요</h1>
+        <h2>열심히 리액트를 공부해 봅시다</h2>
+    </div>
+)
+```
+
+  - 모든 리액트 실습은 npx react-create-app 을통하여 생성한 후 작동한다.
+  - 위치를 start-app 폴더로 옮겨서 실행해야 한다!
