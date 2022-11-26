@@ -5,6 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import Library from "./jsx실습/Library";
 import Clock from "./clock/Clock";
 import CommentList from "./comment/CommentList";
+import NotificationList from "./state/NotificationList";
 
 // jsx실습
 // v17 버전
@@ -35,9 +36,17 @@ import CommentList from "./comment/CommentList";
 // }, 1000);
 
 // Comment 실습
+// ReactDOM.render(
+//     <React.StrictMode>
+//         <CommentList />
+//     </React.StrictMode>,
+//     document.getElementById('root')
+// );
+
+// state 실습
 ReactDOM.render(
     <React.StrictMode>
-        <CommentList />
+        <NotificationList />
     </React.StrictMode>,
     document.getElementById('root')
 );
