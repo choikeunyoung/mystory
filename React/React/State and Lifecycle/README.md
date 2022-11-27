@@ -39,3 +39,6 @@ this.setState({
   ![1](images/1.png)
 
   - Component가 계속 존재하는 것이 아닌 시간의 흐름에 따라 생성되고 업데이트되고 사라진다.
+
+  - Function Component 는 State 사용 불가, Lifecycle 에 따른 기능구현 불가능
+  - Class Component는 State 사용 가능, setState를 통한 state업데이트, Lifecycle method 제공

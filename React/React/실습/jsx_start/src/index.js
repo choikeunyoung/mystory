@@ -6,6 +6,8 @@ import Library from "./jsx실습/Library";
 import Clock from "./clock/Clock";
 import CommentList from "./comment/CommentList";
 import NotificationList from "./state/NotificationList";
+import Accommodate from "./usehook/Accommodate";
+import ConfirmButton from "./useevent/ConfirmButton";
 
 // jsx실습
 // v17 버전
@@ -44,11 +46,30 @@ import NotificationList from "./state/NotificationList";
 // );
 
 // state 실습
+// ReactDOM.render(
+//     <React.StrictMode>
+//         <NotificationList />
+//     </React.StrictMode>,
+//     document.getElementById('root')
+// );
+
+
+// Hook 실습
+// ReactDOM.render(
+//     <React.StrictMode>
+//         <Accommodate />
+//     </React.StrictMode>,
+//     document.getElementById('root')
+// );
+
+
+// ConfirmButton 실습
 ReactDOM.render(
     <React.StrictMode>
-        <NotificationList />
+        <ConfirmButton />
     </React.StrictMode>,
     document.getElementById('root')
 );
+
 
 reportWebVitals();
