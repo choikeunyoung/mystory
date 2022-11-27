@@ -8,6 +8,8 @@ import CommentList from "./comment/CommentList";
 import NotificationList from "./state/NotificationList";
 import Accommodate from "./usehook/Accommodate";
 import ConfirmButton from "./useevent/ConfirmButton";
+import LandingPage from "./logined/LandingPage";
+
 
 // jsx실습
 // v17 버전
@@ -64,9 +66,18 @@ import ConfirmButton from "./useevent/ConfirmButton";
 
 
 // ConfirmButton 실습
+// ReactDOM.render(
+//     <React.StrictMode>
+//         <ConfirmButton />
+//     </React.StrictMode>,
+//     document.getElementById('root')
+// );
+
+
+// LandingPage 실습
 ReactDOM.render(
     <React.StrictMode>
-        <ConfirmButton />
+        <LandingPage />
     </React.StrictMode>,
     document.getElementById('root')
 );
