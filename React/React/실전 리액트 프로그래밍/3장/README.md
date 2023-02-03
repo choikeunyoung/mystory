@@ -373,24 +373,27 @@ function onClick() {
 ### 3.4.2 콘텍스트 API 활용하기
   
   - 중첩사용이 가능하다.
+
 ```JS
     <ThemeContext.Provider value="light">
         <UserContext.Provider value="mike">
         </UserContext.Provider>
     </ThemeContext.Provider>
 
-    <ThemeContext.Provider value="light">
+    <ThemeContext.Consumer>
         {theme => (
-            <UserContext.Provider value="mike">
+            <UserContext.Consumer>
                 {username => (
 
                 )}
-            </UserContext.Provider>
+            </UserContext.Consumer>
         )}
-    </ThemeContext.Provider>
+    </ThemeContext.Consumer>
 
 ```
-  - 데이터 종류별로 콘텍스트를 만들어 사용하면 렌더링 성능상 이점이 있기 때문 (? 종류별이뭐지)
+
+  - 데이터 종류별로 콘텍스트를 만들어 사용하면 렌더링 성능상 이점이 있기 때문
+  - 상위 컴포넌트 값을 하위에서도 쓸수있다.
 
 ### 3.4.3 콘텍스트 API 사용 시 주의할 점
 
