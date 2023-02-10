@@ -276,7 +276,7 @@ function onClick() {
   - useState는 클래스형 컴포넌트 setState와는 다르게 동작하며 setState 메서드는 기존 상태값과 새로 입력된 값을 병합하지만 useState는 이전의 상태값을 덮어씌운다. (...state를 사용하면 이전 상태값을 가져올 수 있음)
   - 리액트 외부에서 등록된 이벤트 함수는 상태값 변경 함수를 호출하면 배치로 처리되지 않는다.
 
-### 3.3.2 컴포넌트에서 부수 효과 처리하기 : useEffect => 이 부분 자세히 모르겠습니다.
+### 3.3.2 컴포넌트에서 부수 효과 처리하기 : useEffect
 
   - 함수 외부 상태를 변경하는 연산을 부수 효과라고 부른다.
   - 부수효과 함수는 렌더링 결과가 실제 돔에 반영된 후 호출된다.
@@ -399,3 +399,177 @@ function onClick() {
 
   - 콘텍스트 데이터로 객체가 전달될 경우 불필요한 렌더링이 발생한다.
   - Provider 를 찾지못할 경우 기본값이 사용된다.
+
+## 3.5 Ref 속성값으로 자식 요소에 접근하기
+
+  - 돔 요소에 직접 접근해야 할 때 사용한다.
+  - Ref(Reference)를 사용하면 자식 요소에 직접 접근할 수 있고, 요소에 포커스를 주거나 요소의 크기 및 스크롤 위치 등을 알 수 있다.
+
+### 3.5.1 ref 속성값 이해하기
+
+```JSX
+  function TextInput() {
+    const inputRef = useRef;
+
+    useEffect(() => {
+      inputRef.current.focus();
+    }, []);
+
+    return (
+      <div>
+        <input type="text" ref={inputRef} />
+        <button>저장</button>
+      </div>
+    );
+  }
+```
+
+  - useRef 훅을 사용하여 반환된 ref 객체를 통해 자식 요소의 ref 속성값에 객체를 넣는다.
+  - 돔 요소 혹은 컴포넌트가 생성되면 ref 객체로 접근이 가능하다.
+  - 컴포넌트의 렌더링 결과가 돔에 반영된 후에 호출해오기 때문에 이미 요소는 존재한다.
+  - console.log 로 ref를 찍어볼 경우 current 프로퍼티 하나만을 가진 객체이다.
+
+  ![ref](./ref.png)
+
+### 3.5.2 ref 속성값 활용하기
+
+  1. 함수형 컴포넌트에서 ref 속성 값을 사용하는 방법
+    
+    - 클래스형 컴포넌트에 ref 속성값을 입력하면 "ref.current"는 해당 컴포넌트의 인스턴스(class의 속성들)를 가리킨다. => ref.current를 통해 해당 속성들을 가져올 수 있다.
+    - 함수형 컴포넌트의 경우 인스턴스로 만들어지지 않지만 "useImperativeHandle"을 사용하면 변수와 함수를 다룰 수 있게된다.
+
+    ```JSX
+      function TextInput({ inputRef }) {
+        return (
+          <div>
+            <input type="text" ref={inputRef} />
+            <button>저장</button>
+          </div>
+        );
+      }
+
+      function Form() {
+        const inputRef = useRef();
+        useEffect(() => {
+          inputRef.current.focus();
+        }, []);
+        return (
+          <div>
+            <TextInput inputRef={inputRef} />
+            <button onClick={() => inputRef.current.focus()}>텍스트로 이동</button>
+          </div>
+        );
+      }
+    ```
+
+    - TextInput 컴포넌트 'inputRef' 속성을 input 요소의 ref 값에 넣은 후 부모 컴포넌트에서 속성값으로 넣어주는 형태이다.
+    - 컴포넌트 내부 구조를 알아야 가능한 방법이기에 꼭 필요한 경우에만 사용하는 것이 좋다.
+
+  2. forwardRef 함수로 ref 속성값을 직접 처리하는 방법
+
+    - 단순한 컴포넌트를 만들어 사용하는 경우가 많이 있으며 이런 단순한 컴포넌트와 연결하기 위해 사용한다.
+    - 보통 변수명을 ref로 사용하는 것이 좋지만, 리액트 내부에서 처리하는 과정에서 원하는 요소로 연결이 안될 수도 있다.
+    - "forwardRef" 함수를 사용하면 직접 ref 속성값을 처리할 수 있다.
+
+  3. ref 속성값으로 함수 사용하는 방법
+
+    - ref 속성값으로 함수를 입력하여 자식 요소가 생성되거나 삭제되는 시점에 호출할 수 있다.
+    - 생성될 때는 해당 요소를 참조하는 변수가 넘어오고 삭제되면 null 값이 들어간다.
+    - 이렇게 실행할 경우 문제점으론 컴포넌트가 렌더링을 할 때마다 새로운 함수를 속성값으로 넣는 문제점이 생긴다.
+      > ref ={ref => ref && setText(INITIAL_TEXT)} 매번 렌더링마다 같은 함수가 호출되는 것이 아니다.
+    - 새로운 함수가 들어올 경우 이전 함수를 null 처리하여 호출한 후 새로운 함수에 요소의 참조값을 넣어 호출한다.
+    - 고정된 함수를 사용해서 함수를 고정시켜야한다. => useCallback 훅을 사용하여 함수 자체를 변하지 않도록 고정시켜야한다. (메모제이션 기능)
+    - 돔 요소의 생성과 제거 시점을 알 수 있다. => 처음 항목 덕분에
+
+### 3.5.3 ref 속성값 사용 시 주의할 점
+  
+  - 컴포넌트 생성 이후라도 ref 객체의 current속성이 없을 수 있다.
+
+  ```JSX
+    function Form() {
+      const inputRef = useRef();
+      const [showText, setShowTime] = useState(true);
+
+      return (
+        <div>
+          {showText && <input type="text" ref={inputRef} />}
+          <button onClick={() => setShowText(!showText)}>
+            텍스트 보이기/가리기
+          </button>
+          <button onClick={() => inputRef.current.focus()}> 텍스트로 이동</button>
+        </div>
+      );
+    }
+  ```
+
+  - 조건부 렌더링을 하는 경우 컴포넌트가 생성된 이후라도 current 객체가 존재하지 않을 수 있다.
+
+## 3.6 리액트 내장 훅 살펴보기
+
+  - 다양한 내장된 훅들을 제공한다.
+
+### 3.6.1 Consumer 컴포넌트 없이 콘텍스트 사용하기 : useContext
+
+  - ContextAPI에서 Consumer 사용없이 Provider로 부터 전달된 값을 사용할 수 있다.
+
+  ```JSX
+    <UserContext.Provider value = {user}>
+      <ChildComponent />
+    </UserContext.Provider>
+
+    function Childcomponent() {
+      const user = useContext(UserContext)
+    }
+  ```
+
+  - 사용하기 간편한 장점이 있다.
+
+### 3.6.2 렌더링과 무관한 값 저장하기 : useRef
+
+  - 컴포넌트 내부에서 생성되는 값 중 렌더링과 무관한 현재 쓰지않는 값을 저장한 후 나중에 사용하기 위해 사용한다.
+  - 이전 상태를 저장했다가 원하는 곳에 사용하는데 사용됨.
+
+### 3.6.3 메모제이션 훅 : useMemo, useCallback
+
+  - useMemo 와 useCallback은 이전값을 기억해서 성능 최적화를 위해 사용된다.
+
+  1. useMemo
+
+    - 메모제이션과 비슷하다(?)
+    - 계산량이 많은 함수의 반환값을 재활용하는 용도로 사용된다.
+      - 첫 번째 매개변수로 함수를 입력받음
+      - 두 번째 매개변수로 의존성 배열받음
+    - 의존성 배열에 변경이 없으면 이전 값을 재사용한다.
+
+  2. useCallback
+
+    - 리액트의 렌더링 성능을 위해 제공된다.
+    - 컴포넌트가 렌더링 될 때마다 새로운 함수를 생성해서 자식 컴포넌트 속성값으로 입력되는 경우가 많이 있다.
+    - 이를 막기 위해 함수를 고정시켜주는 역할을 한다. => 함수가 새로 생성되면 불필요한 렌더링이 발생하기 때문에
+      - 첫 번째 매개변수로 함수를 입력받음
+      - 두 번째 매개변수로 의존성 배열받음
+    - 의존성 배열에 변경이 없으면 이전 값을 사용한다.
+
+### 3.6.4 컴포넌트 상태값을 리덕스처럼 관리하기 : useReducer
+
+  - useReducer 사용하여 컴포넌트 상태값을 리덕스 처럼 관리가 가능하다.
+  - 리덕스 관련된 개념이 없기때문에 설명을 못하겠다.
+
+  - 상위 컴포넌트에서 다수의 상태값을 관리하고 자식 컴포넌트에서 발생한 이벤트로 상위 컴포넌트의 상태값을 변경해야 하는 경우가 많을다.
+  - 간단하게 제일 상위에서 하위 깊은 곳 까지 값을 전달하는 역할
+
+### 3.6.5 부모 컴포넌트에서 접근 가능한 함수 구현하기 : useImperativeHandle
+
+  - ref 객체를 통해 클래스형 컴포넌트 자식 컴포넌트 요소들을 호출 가능하다.
+  - 함수형 컴포넌트에서 변수와 함수를 가져올 수 있게 해준다.
+
+### 3.6.6 기타 리액트 내장 훅 : useLayoutEffect, useDebugValue
+
+  1. useLayoutEffect
+    
+    - useEffect는 렌더링 결과가 돔에 반영된 후 비동기 처리
+    - useLayoutEffect는 렌더링 결과가 반영된 직후 호출 => 동기 처리
+
+  2. useDebugValue
+
+    - 개발 편의를 위해 제공되고 커스텀 훅의 내부 상태를 관찰할 때 사용.
