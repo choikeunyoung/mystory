@@ -118,3 +118,81 @@
 
  - 초기값이 있는 변수에서 타입스크립트는 타입을 유추할 수 있으므로 따로 애너테이션을 선언하는 것은 불필요하다.
  - 초기값이 있는 변수에 애너테이션을 추가하는 경우 그 값의 타입이 일치하는지 확인할 수 있다.
+
+## 타입 종류
+
+ 1. String
+
+    ```ts
+      let str:string = "hi";
+    ```
+
+ 2. Number
+
+   ```ts
+      let num: number = 10;
+   ```
+
+ 3. Boolean
+
+   ```ts
+      let isLoggIn: boolean = false;
+   ```
+
+ 4. Object, Array
+
+   ```ts
+      let arr: number[] = [1, 2, 3];
+      let arr: Array<number> = [1, 2, 3];
+   ```
+
+ 5. Tuple
+
+   ```ts
+      let arr: [string, number] = ["hi", 10];
+      // 정의하지 않은 타입, 인덱스로 접근할 경우 오류 발생
+      arr[1].concat("!"); // Error, 'number' does not have 'concat'
+      arr[5] = "hello"; // Error, Property '5' does not exist on type '[string, number]'
+   ```
+
+ 6. Enum : 특정 값(상수)들의 집합을 의미합니다.
+
+   ```ts
+      enum Avengers { Capt, IronMan, Thor }
+      let hero: Avengers = Avengers.Capt;
+      let hero: Avengers = Avengers[0];
+
+      enum Avengers { Capt = 2, IronMan, Thor }
+      let hero: Avengers = Avengers[2]; // Capt
+      let hero: Avengers = Avengers[4]; // Thor
+   ```
+
+ 7. any : 모든타입에 대해서 허용
+
+   ```ts
+      let str: any = "hi";
+      let num: any = 10;
+      let arr; any = ['a', 2, true];
+   ```
+
+ 8. void : 반환값이 없는 함수의 반환 타입
+
+   ```ts
+      function printSomething(): void {
+         console.log('sth');
+      }
+
+      function returnNothing(): void {
+         return;
+      }
+   ```
+
+ 9.  Never : 함수의 끝에 절대 도달하지 않는다는 의미를 지닌 타입
+
+   ```ts
+      function neverEnd(): never {
+         while (true) {
+            
+         }
+      }
+   ```
