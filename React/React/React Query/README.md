@@ -5,6 +5,34 @@
 - React Component 내부에서 간단하고 직관적으로 API 사용이 가능함
 - 비동기 데이터 불러오는 과정에서 발생하는 문제를 해결해주는 역할
 
+## 기본 세팅
+
+```JSX
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
+
+// 아래와 같이 QueryClient에 defaultOptions를 설정해서 사용할 수도 있습니다.
+// const queryClient = new QueryClient({
+//   defaultOptions: {
+//     queries: {
+//       suspense: true,
+//     },
+//   },
+// })
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Todos />
+			<ReactQueryDevtools /> // 선택사항
+    </QueryClientProvider>
+  )
+}
+```
+
+- 최상위 컴포넌트 위에 QueryClientProvider로 감싸줘야 한다.
+
 ## 캐싱(Caching)
 
 - 데이터의 복사본을 저장 후 동일한 데이터의 재접근 속도를 높이는 것이 캐싱이다!!
@@ -70,6 +98,14 @@
 
 ### useQuery
 
+```JSX
+const { data } = useQuery(
+	queryKey,
+	queryFunction,
+	options,
+)
+```
+
 - 첫 번째 파라미터로 unique key를 포함한 배열이 들어가며 동일한 쿼리를 불러올 때 유용하게 사용됨
 - 첫 파라미터 배열의 첫 요소는 unique key로 사용되고 두 번째 요소는 query 함수 내부 파라미터로 값들이 전달됨
 - 두 번째 파라미터로 실제 호출하고자 하는 비동기 함수가 들어가며 함수는 Promise를 반환하는 형태여야 한다.
@@ -122,4 +158,45 @@ const { data: nextTodo, error, isFetching } = useQuery(
    queryFn: () => api.getSpellInfo(riot.version)
  }
 ]);
+```
+
+### useMutation
+
+```JSX
+const { mutate } = useMutation(
+  mutationFn,
+  options,
+);
+```
+
+- Mutation 을 통해 데이터 업데이트 및 캐시 업데이트 요청
+- POST, PUT, DELETE 요청시 사용한다.
+- 첫번째 인자는 Mutation Function으로 Promise를 반환하는 함수이다. (fetch, axios)
+- 두번째 인자는 useMutation에 사용되는 옵션을 지정하는 객체
+
+```JSX
+import { useMutation, useQueryClient } from 'react-query';
+
+// 데이터 업데이트 함수
+function updateUser(userId, updatedData) {
+  return fetch(`/api/user/${userId}`, {
+    method: 'PUT',
+    body: JSON.stringify(updatedData),
+  }).then((response) => response.json());
+}
+
+function UserProfileEditor({ userId }) {
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation((updatedData) => updateUser(userId, updatedData), {
+    onSuccess: () => {
+      // 데이터 업데이트 후 캐시를 재로드
+      queryClient.invalidateQueries(['user', userId]);
+    },
+  });
+
+  const handleSubmit = (updatedData) => {
+    mutate(updatedData); // mutate는 자동으로 실행되지 않기 때문에 submit 시에 mutate 실행
+  };
+}
 ```
