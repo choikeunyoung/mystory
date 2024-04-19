@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 import { StyleSheet, Text, View, ScrollView, Dimensions } from "react-native";
 
 const { width: SCRREN_WIDTH } = Dimensions.get("window");
-API_KEY = "AIzaSyAbUX2YVZfOtrzgONUvU3nTejf1GbybftM";
 
 export default function App() {
   const [city, setCity] = useState("Loading...");
+  const [days, setDays] = useState([]);
   const [ok, setOk] = useState(true);
   const getWeather = async () => {
     const { granted } = await Location.requestForegroundPermissionsAsync();
