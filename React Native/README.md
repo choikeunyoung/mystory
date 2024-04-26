@@ -85,3 +85,65 @@
 ### Babel 이란?
 
 - 최신 자바스크립트 문법을 지원하지 않는 브라우저들을 최신 자바스크립트 문법을 구형 브라우저에서도 돌 수 있게 변환해주는 라이브러리
+
+## 고정적인 태그
+
+- View : 기본적으로 div 태그 역할을 한다. ( flex box 속성을 가짐 )
+- Text : p 태그 역할을 한다.
+- Image : <Image source = {{uri:'경로'}} or {require('경로')}
+- TextInput : input 속성을 가짐 ( onChangeText, onPress, value )
+
+```JS
+  <TextInput
+  placeholder="이름을 입력해 주세요"
+  value={userName}
+  style={styles.inputBox}
+  onChangeText={(e) => {onChangeName(e)}}
+  />
+```
+
+- ScrollView : 기본적으로 페이지가 오버 됐을때 브라우저와 달리 스크롤이 생기지 않으므로 태그를 사용
+- TouchableOpacity : 버튼을 만들 때 주로 사용한다. 터치 시 opacity의 변화를 주며 이벤트 실행
+
+```JS
+ <TouchableOpacity activeOpacity={0.8}>
+      <Text>버튼</Text>
+  </TouchableOpacity>
+```
+
+- FlatList : react 에서 사용하는 map 의 역할을 하며 모든 데이터를 렌더링 하지 않고 화면에 보이는 영역만 렌더링 해줌
+
+```JS
+  const listArr = [1,2,3,4,5,6];
+
+  const renderList = ({item, index}) => {
+      return(
+          <Text>{item}</Text>
+      )
+  }
+ <FlatList
+      // 반복을 할 배열
+      data={listArr}
+      // 렌더 할 아이템
+      renderItem={renderList}
+      // 교유 키값
+      keyExtractor={(item, index) => index.toString()}
+      >
+```
+
+- SafeAreaView : 아이폰의 경우 상단의 m 자 모양까지 화면이 꽉 차는 경우가 있는데, 화면이 잘려보이기 때문에 View 대신 이 컴포넌트를 사용하면 해결된다.
+
+- KeyboardAvoidingView : 화면에서 키보드가 요소를 가리지않고 자연스럽게 올라갈 수 있게 만들어주는 역할
+
+![alt text](image-2.png)
+
+- Pressable : 정의된 자식에 대한 다양한 프레스 상호 작용 단계를 감지할 수 있는 핵심 구성 요소 래퍼
+
+```JS
+  <Pressable onPress={onPressFunction}>
+    <Text>I'm pressable!</Text>
+  </Pressable>
+```
+
+![alt text](image-3.png)
+![alt text](image-4.png)
