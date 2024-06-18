@@ -55,3 +55,43 @@
 - docker rmi [OPTION] IMAGE => 원하는 이미지 삭제
 
   ![docker_rmi](image-9.png)
+
+## 간단한 네트워크 동작
+
+![network](image-10.png)
+
+- 웹 브라우저에서 Port(65535개 존재)로 요청이 들어오면 그 포트에 해당하는 Container 와 연결된다.
+- 포트를 통해서 요청을 받으면 그 요청 받은 Container는 원하는 작업의 결과를 다시 Web Server 를 통해서 전달해준다.
+
+![host_network](image-11.png)
+
+- 이러한 컨테이너가 설치된 운영체제를 Host 라고 얘기하며 내부에는 여러개의 Container가 존재한다.
+- 각 각 독립적인 실행환경을 가지고있다.
+- Web Browser로 Web Server로 접속을 요청할때 Host에 접속이 시도된 Port 와 연결하고자 하는 Container를 연결해주면 된다.
+  - ex. host(80) 번과 Container(30) 의 경우 => docker run 80:30 httpd
+  - ex. host(80) 번과 Container(80) 의 경우 => docker run 80:80 httpd
+  - ex. host(8000) 번과 Container(80) 의 경우 => docker run 8000:80 httpd
+- 이러한 방식을 port forwarding 이라고 얘기한다.
+
+  - docker run --name [NAME] -p {들어오는 Port: 연결되는 Port} [IMAGE]
+
+  ![port 연결](image-12.png)
+
+  - localhost:8081 포트에 접속을 시도하면 아래와 같은 결과가 나온다.
+
+  ![result](image-13.png)
+
+## 컨테이너 연결
+
+![dockerConnect](image-14.png)
+
+- docker exec [ContainerName] [COMMAND]
+  - docker exec -it ws3 /bin/bash => 지속적인 연동을 통해서 docker container 명령어 시행
+  - i : interactive
+  - t : tty
+  - CS 지식 필요함 찾아서 정리 예정
+
+### Host 내부에서 Container와 File System 연결
+
+- docker run -p 8081:80 -v [연결할 File System] : [연결 될 Container File] [IMAGE]
+- 이런 연결을 통해서 docker 내부 수정하기 어려운 파일을 연결할 File System 수정을 통해서 버전 관리를 진행한다.
