@@ -115,3 +115,5 @@ def factorial(n):
 | 이진 탐색 트리   | O(n)    | O(n)    | O(n)    | O(n)    |
 | AVL 트리         | O(logn) | O(logn) | O(logn) | O(logn) |
 | 레드 블랙 트리   | O(logn) | O(logn) | O(logn) | O(logn) |
+
+참고할만한 블로그 : https://seo0h.tistory.com/m/30
