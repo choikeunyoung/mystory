@@ -94,3 +94,31 @@ test()
 - 이벤트등 메인 로직을 담당
 - 요청에 대한 로직을 처리한 후 Model에 저장하고 View에 전달
 - Model 이나 View 의 변경을 모니터링함
+
+# MVP 패턴
+
+![MVP](image-2.png)
+
+- Model, View, Presenter 구조를 가진 패턴
+
+1. View를 통해 사용자 요청을 받음
+2. Presenter에 데이터 요청
+3. Presenter에서 Model에 데이터 요청 및 응답을 받음
+4. 다시 Presenter에서 View에 데이터 응답
+5. 렌더링
+
+- View 와 1:1 관계이기 때문에 강한 결합을 지닌 패턴
+- View 와 Model간 의존성이 없음
+
+# MVVM 패턴
+
+![MVVM](image-3.png)
+
+- Model, View, View Model 구조를 가짐
+
+1. View를 통한 Action이 들어오면 Command 패턴으로 View Model에 요청을 보냄
+2. View Model은 Model에 데이터 요청 받은 후 데이터를 받음
+3. View Model은 응답받은 데이터를 가공 후 저장
+4. View에서 View Model과 Data Binding하여 화면에 나타냄
+
+- 뷰와 뷰모델 사이 데이터 바인딩을 통해 UI를 별도의 코드 수정없이 재사용 가능
