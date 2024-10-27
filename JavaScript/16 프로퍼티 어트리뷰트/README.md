@@ -47,5 +47,149 @@
   - configurable
 
 ```JS
+// 데이터 프로퍼티
+const person = {
+    firstName: "Hamboo",
+    lastName: "Lee",
+    // 접근자 프로퍼티
+    get fullName() {
+        return `${this.firstName} ${this.lastName}`
+    },
 
+    set fullName(name) {
+        [this.firstName, this.lastName] = name.split(" ");
+    }
+}
+
+console.log(person.fullName)
+// Hamboo Lee
+person.fullName = "hungry kim"
+console.log(person.fullName)
+// hungry kim
 ```
+
+### 프로토타입
+
+- 어떤 객체의 상위 객체 역할을 하는 객체
+- 하위 객체에게 자신의 프로퍼티와 메서드를 상속
+
+## 프로퍼티 정의
+
+- 새로운 프로퍼티를 추가하며 어트리뷰트를 명시적 정의 혹은 기존 어트리뷰트를 재정의 하는 것
+
+```JS
+const person = {};
+
+Object.defineProperty(person,'firstName', {
+    value: "Ungmo",
+    writable: true,
+    enumerable: true,
+    configurable: true
+});
+```
+
+| 프로퍼티 디스크립터 객체의 프로퍼티 | 대응하는 어트리뷰트 | 생략했을 때의 기본값 |
+| ----------------------------------- | ------------------- | -------------------- |
+| value                               | [[Value]]           | undefined            |
+| get                                 | [[Get]]             | undefined            |
+| set                                 | [[Set]]             | undefined            |
+| writable                            | [[Writable]]        | false                |
+| enumerable                          | [[Enumerable]]      | false                |
+| configurable                        | [[Configurable]]    | false                |
+
+## 객체 변경 방지
+
+- 객체는 변경이 가능한 값이므로 재할당 없이 직접 변경이 가능
+- Object.defineProperty or Object.defineProperties 를 통하여 어트리뷰트 재정의도 가능
+
+| 구분           | 메서드                   | 프로퍼티 추가 | 프로퍼티 삭제 | 프로퍼티 읽기 | 프로퍼티 쓰기 | 프로퍼티 어트리뷰트 재정의 |
+| -------------- | ------------------------ | ------------- | ------------- | ------------- | ------------- | -------------------------- |
+| 객체 확장 금지 | Object.preventExtensions | X             | O             | O             | O             | O                          |
+| 객체 밀봉      | Object.seal              | X             | X             | O             | O             | X                          |
+| 객체 동결      | Object.freeze            | X             | X             | O             | X             | X                          |
+
+### 객체 확장 금지
+
+- 객체의 확자을 금지하는 것으로 설정된 프로퍼티의 추가가 불가능함
+
+```JS
+const person = {name : "Lee"}
+console.log(person.isExtensible(person)); // true
+
+Object.preventExtensions(person):
+
+console.log(person.isExtensible(person)); // false
+
+person.age = 20;
+console.log(person) // {name : 'Lee'}
+```
+
+### 객체 밀봉
+
+- 프로퍼티 추가 및 삭제 어트리뷰트 재정의 금지
+- 읽기와 쓰기만 가능
+
+```JS
+const person = { name : "Lee" };
+
+console.log(Object.isSealed(person)); // false
+
+Object.seal(person);
+
+console.log(Object.isSealed(person)); // true
+
+console.log(Object.getOwnPropertyDescriptors(person));
+
+{
+  name: {
+    value: 'Lee',
+    writable: true,
+    enumerable: true,
+    configurable: false
+  }
+}
+```
+
+### 객체 동결
+
+- 프로퍼티 추가 및 삭제와 프로퍼티 어트리뷰트 재정의 금지, 값 갱신 금지
+- 읽기만 가능
+
+```JS
+const person = { name : "Lee" };
+
+console.log(Object.isFrozen(person)); // false
+
+Object.freeze(person);
+
+console.log(Object.isFrozen(person)); // true
+
+console.log(Object.getOwnPropertyDescriptors(person));
+
+{
+  name: {
+    value: 'Lee',
+    writable: false,
+    enumerable: true,
+    configurable: false
+  }
+}
+```
+
+### 불변 객체
+
+- 프로퍼티만 변경이 방지 중첩 객체까지 동결이 불가능
+
+```JS
+const person = {
+    name: "Lee",
+    address: { city : "Seoul"}
+};
+
+Object.freeze(person); // 얕은 동결
+
+console.log(Object.isFreeze(person)); // true
+console.log(Object.isFreeze(person.address)); // false
+```
+
+- 중첩 객체까지 동결하기 위해서는 재귀적 호출을 통한 처리가 필요함
