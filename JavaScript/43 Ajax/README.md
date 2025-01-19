@@ -1,5 +1,6 @@
 # 43. Ajax
 
+- Asynchronous JavaScript And XML' 또는 'Asynchronous JavaScript transfer 약자로 JavaScript와 XML 형식을 이용한 비동기적 정보 교환 기법
 - JS를 사용하여 브라우저가 서버에서 비동기 방식으로 데이터를 요청하고 페이지를 동적으로 갱신하는 프로그래밍 방식
 - Web API 인 XMLHttpRequest 방식으로 동작
 
